@@ -3,7 +3,7 @@
 如果我们想用 TypeScript 进行开发 Node.js 应用，并且希望最终使用 ES6 模块语法。那么我们就会遇到这些问题：
 
 1. `package.json` 中必须要指定 `"type": "module"` 来启用 ES6 模块语法。
-2. TS 编译之后无法生成 `import` 语句的 `.js` 文件扩展名。
+2. TS 编译之后无法生成 `.js` 文件扩展名。
 3. 一旦使用启用 ES6 模块语法，就必须指定文件的扩展名,比如 `.js`。
 4.
 
@@ -53,11 +53,26 @@ module.exports = {
 
 于是，在 ES6 语法糖 `default` 的影响下，require 导出的不是 `xxx` 这个对象，`xxx` 是作为 `default` 的值，被包在一个更大的对象里。
 
+## 库规范
+
+有依赖 commonjs 包的库，考虑输出多包；
+同时面对多种环境，优先考虑输出多包。
+
+1. 导出 `cjs\mjs` 两种文件，方便用户使用。
+2. 通过 `package.json` 的 `exports` 同时，指定 `require、import、types` 文件导出
+3. 使用 ts 编译，生成 `.d.ts` 类型定义文件
+
+其余可以考虑：
+
+> 轮子哥 sindresorhus 的 [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
+
 ## 参考
 
-- [ts-bridge/ts-bridge](https://github.com/ts-bridge/ts-bridge)
+- [nonara/ts-patch](https://github.com/nonara/ts-patch)
 
 - [Modules: ECMAScript modules](https://nodejs.org/api/esm.html#modules-ecmascript-modules)
+
+- [ts-bridge/ts-bridge](https://github.com/ts-bridge/ts-bridge)
 
 - [GervinFung/ts-add-js-extension](https://github.com/GervinFung/ts-add-js-extension)
 
