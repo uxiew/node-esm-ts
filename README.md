@@ -19,23 +19,27 @@ ESM 会有一些与 CJS 不同：
 
   ```js
   // main.cjs
-  import('./fileA.mjs').then((ctx) => {
+  import("./fileA.mjs").then((ctx) => {
     console.log(ctx.name); // "mjs"
   });
   ```
 
+### `require()` 与 `import()`
+
+1. require() 调用同步 CJS 模块加载器
+2. 只能在 CJS 模块中使用，在 ES 模块中可以使用 [`module.createRequire()`](https://nodejs.org/api/module.html#modulecreaterequirefilename) 构造 `require` 函数。
+3. 它只能引用 CJS 模块，引用 ES 模块将抛出 `ERR_REQUIRE_ESM`，因为不可能从同步模块调用异步模块加载器。
+4. `import()` 调用异步 ES 模块加载器
+5. `import()` 只能在 ES 模块调用
+6. `import()` 可以引用 ES 和 CJS 模块。
+
 ## JSON 模块
 
-```
-import packageConfig from './package.json' with { type: 'json' };
+```js
+import packageConfig from "./package.json" with { type: "json" };
 ```
 
 必须使用 `with` 语法，会导致 node 不能识别。所以不要使用这种语法。
-
-## ES6 模块中，确实需要使用 `require`
-
-大多数情况下，ES 模块就可以用来加载 CommonJS 模块了。
-如果需要，可以使用 [`module.createRequire()`](https://nodejs.org/api/module.html#modulecreaterequirefilename) 在 ES 模块中构造 `require` 函数。
 
 ## `require('xxx').default`
 
@@ -47,7 +51,7 @@ import packageConfig from './package.json' with { type: 'json' };
 
 ```js
 module.exports = {
-  default: xxx
+  default: xxx,
 };
 ```
 
