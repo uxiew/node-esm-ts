@@ -15,7 +15,7 @@ ESM 会有一些与 CJS 不同：
 
 - ESM 中无法使用 `__dirname/__filename` 这类 Node.js 的全局变量。[alternative-for-dirname-in-node-js-when-using-es6-modules](https://stackoverflow.com/questions/46745014/alternative-for-dirname-in-node-js-when-using-es6-modules)
 
-- ESM 是可以向下兼容 CJS 的。但是要 CJS 向上兼容，导入 ESM 模块，就会很麻烦，必须要使用 dynamic import()。
+- ESM 是可以向下兼容 CJS 的。但是要 CJS 向上兼容，导入 ESM 模块，就会很麻烦，必须要使用 `dynamic import()`。
 
   ```js
   // main.cjs
@@ -24,14 +24,14 @@ ESM 会有一些与 CJS 不同：
   });
   ```
 
-### `require()` 与 `import()`
+### `require` 与 `import`
 
-1. require() 调用同步 CJS 模块加载器
-2. 只能在 CJS 模块中使用，在 ES 模块中可以使用 [`module.createRequire()`](https://nodejs.org/api/module.html#modulecreaterequirefilename) 构造 `require` 函数。
-3. 它只能引用 CJS 模块，引用 ES 模块将抛出 `ERR_REQUIRE_ESM`，因为不可能从同步模块调用异步模块加载器。
-4. `import()` 调用异步 ES 模块加载器
-5. `import()` 只能在 ES 模块调用
-6. `import()` 可以引用 ES 和 CJS 模块。
+1. `require` 调用同步 CJS 模块加载器
+2. `require` 在 CJS 模块中使用，在 ES 模块中可以使用 [`module.createRequire()`](https://nodejs.org/api/module.html#modulecreaterequirefilename) 构造 `require` 函数。
+3. `require` 只能引用 CJS 模块，引用 ES 模块将抛出 `ERR_REQUIRE_ESM`，因为不可能从同步模块调用异步模块加载器。[node.js 22](https://nodejs.org/en/blog/announcements/v22-release-announce) adds `require()` support for synchronous ESM graphs under the flag `--experimental-require-module`。[pr](https://github.com/nodejs/node/pull/51977))
+4. `import` 调用异步 ES 模块加载器
+5. `import` 只能在 ES 模块调用
+6. `import` 可以引用 ES 和 CJS 模块。
 
 ## JSON 模块
 
