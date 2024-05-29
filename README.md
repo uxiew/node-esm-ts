@@ -24,6 +24,8 @@ ESM 会有一些与 CJS 不同：
   });
   ```
 
+ 在 NodeJS 中想要同步和动态导入 ES6 模块，可以考虑：[import-sync](https://github.com/nktnet1/import-sync)
+
 ### `require` 与 `import`
 
 1. `require` 调用同步 CJS 模块加载器
