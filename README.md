@@ -5,7 +5,6 @@
 1. `package.json` 中必须要指定 `"type": "module"` 来启用 ES6 模块语法。
 2. TS 编译之后无法生成 `.js` 文件扩展名。
 3. 一旦使用启用 ES6 模块语法，就必须指定文件的扩展名,比如 `.js`。
-4.
 
 ## ESM 与 CJS
 
@@ -17,7 +16,7 @@ ESM 会有一些与 CJS 不同：
 
 - ESM 是可以向下兼容 CJS 的。但是要 CJS 向上兼容，导入 ESM 模块，就会很麻烦，必须要使用 `dynamic import()`。
 
-  ```js
+  ```ts
   // main.cjs
   import("./fileA.mjs").then((ctx) => {
     console.log(ctx.name); // "mjs"
@@ -25,6 +24,12 @@ ESM 会有一些与 CJS 不同：
   ```
 
  在 NodeJS 中想要同步和动态导入 ES6 模块，可以考虑：[import-sync](https://github.com/nktnet1/import-sync)
+
+### `.cts` 和 `.mts` 文件
+随着 Node.js 12 的引入和 ES 模块支持的增加，TypeScript 引入了新的文件扩展名，以更清楚地区分 CommonJS 和 ES 模块：
+
+- `.cts`：这是一个被视为 CommonJS 模块的 TypeScript 文件。它相当于使用 `--module commonjs` 编译选项。
+- `.mts`：这是一个被视为 ES 模块的 TypeScript 文件。它相当于使用 `--module esnext` 编译选项。
 
 ### `require` 与 `import`
 
@@ -68,9 +73,13 @@ module.exports = {
 2. 通过 `package.json` 的 `exports` 同时，指定 `require、import、types` 文件导出
 3. 使用 ts 编译，生成 `.d.ts` 类型定义文件
 
-其余可以考虑：
+### 相关构建工具
+- [unbuild](https://github.com/unjs/unbuild)
+- [tshy](https://github.com/isaacs/tshy)
 
-> 轮子哥 sindresorhus 的 [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
+
+## Pure ESM package
+> 轮子哥 [sindresorhus](https://github.com/sindresorhus) 的 [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
 
 ## 参考
 
